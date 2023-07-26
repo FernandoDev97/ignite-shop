@@ -1,10 +1,11 @@
 import { useRouter } from 'next/router'
-import React from 'react'
+import React, { useState } from 'react'
 import { ImageContainer, ProductContainer, ProductDetail } from '../../styles/pages/product'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { stripe } from '../../lib/stripe'
 import Stripe from 'stripe'
 import Image from 'next/image'
+import axios from 'axios'
 
 interface ProductProps {
   product: {
@@ -17,11 +18,23 @@ interface ProductProps {
   }
 }
 
-export default function Product({product}: ProductProps) {
-  const { isFallback, query } = useRouter()
+export default function Product({ product }: ProductProps) {
+  // const { isFallback, query } = useRouter()
+  const [isCreatePaymentSession, setIsCreatePaymentSession] = useState(false)
 
-  function handlePriceId() {
-    console.log(product.defaultPriceId)
+  async function handlePriceId() {
+    try {
+      setIsCreatePaymentSession(true)
+      const { data } = await axios.post('/api/payment', {
+        priceId: product.defaultPriceId
+      })
+      const { checkoutUrl } = data
+      window.location.href = checkoutUrl
+    } catch (err) {
+      setIsCreatePaymentSession(false)
+      // Conectar com uma ferramenta de observabilidade (Datadog / Sentry)
+      alert('Falha ao redirecionar ao checkout!')
+    }
   }
 
   return (
@@ -36,7 +49,7 @@ export default function Product({product}: ProductProps) {
 
         <p>{product.description}</p>
 
-        <button onClick={handlePriceId}>Comprar agora</button>
+        <button disabled={isCreatePaymentSession} onClick={handlePriceId}>Comprar agora</button>
       </ProductDetail>
     </ProductContainer>
   )
