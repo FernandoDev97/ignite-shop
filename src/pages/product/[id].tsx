@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import { ImageContainer, ProductContainer, ProductDetail } from '../../styles/pages/product'
 import { GetStaticPaths, GetStaticProps } from 'next'
@@ -6,6 +5,7 @@ import { stripe } from '../../lib/stripe'
 import Stripe from 'stripe'
 import Image from 'next/image'
 import axios from 'axios'
+import Head from 'next/head'
 
 interface ProductProps {
   product: {
@@ -38,20 +38,26 @@ export default function Product({ product }: ProductProps) {
   }
 
   return (
-    <ProductContainer>
-      <ImageContainer>
-        <Image src={product.imageUrl} width={520} height={480} />
-      </ImageContainer>
+    <>
+      <Head>
+        <title>{product.name} | Ignite Shop</title>
+      </Head>
+      
+      <ProductContainer>
+        <ImageContainer>
+          <Image src={product.imageUrl} width={520} height={480} />
+        </ImageContainer>
 
-      <ProductDetail>
-        <h1>{product.name}</h1>
-        <span>{product.price}</span>
+        <ProductDetail>
+          <h1>{product.name}</h1>
+          <span>{product.price}</span>
 
-        <p>{product.description}</p>
+          <p>{product.description}</p>
 
-        <button disabled={isCreatePaymentSession} onClick={handlePriceId}>Comprar agora</button>
-      </ProductDetail>
-    </ProductContainer>
+          <button disabled={isCreatePaymentSession} onClick={handlePriceId}>Comprar agora</button>
+        </ProductDetail>
+      </ProductContainer>
+    </>
   )
 }
 
