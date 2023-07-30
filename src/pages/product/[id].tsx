@@ -35,7 +35,13 @@ export default function Product({ product }: ProductProps) {
 
           <p>{product.description}</p>
 
-          <button disabled={itemAlreadyExits} onClick={() => addToCart(product)}> {itemAlreadyExits ? 'Item já está adicionado na sacola' : 'Adicionar na sacola'} </button>
+          <button 
+            disabled={itemAlreadyExits} 
+            onClick={() => addToCart(product)}> 
+            {itemAlreadyExits ? 
+            'Item já está adicionado na sacola' : 
+            'Adicionar na sacola'} 
+          </button>
         </ProductDetail>
       </ProductContainer>
     </>
