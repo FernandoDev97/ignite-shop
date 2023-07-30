@@ -12,12 +12,20 @@ export const CartContent = styled(Dialog.Content, {
     paddingTop: '4.5rem',
     display: "flex",
     flexDirection: "column",
-
+    
     h2: {
         fontWeight: 700,
         fontSize: '$lg',
         color: '$gray100',
         marginBottom: '2rem',
+    },
+
+    section: {
+        display: "flex",
+        flexDirection: "column",
+        gap: '1.75rem',
+        flex: 1,
+        overflowY: "auto",
     }
 })
 

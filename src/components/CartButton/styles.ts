@@ -1,23 +1,57 @@
 import { styled } from "@stitches/react";
 
-export const CartButtonContainer = styled('button', {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    border: "none",
-    borderRadius: 6,
-    position: "relative",
-    backgroundColor: '$gray800',
-    color: '$gray500',
-    width: '3rem',
-    height: '3rem',
+export const CartButtonContainer = styled("button", {
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  border: "none",
+  borderRadius: 6,
+  position: "relative",
 
-    '&:disablad': {
-        opacity: 0.6,
-        cursor: "not-allowed",
+  "&:disabled": {
+    opacity: 0.6,
+    cursor: "not-allowed",
+  },
+
+  variants: {
+    color: {
+      gray: {
+        backgroundColor: "$gray800",
+        color: "$gray500",
+      },
+      green: {
+        backgroundColor: "$green500",
+        color: "$white",
+
+        "&:not(:disabled):hover": {
+          backgroundColor: "$green300",
+        },
+      },
     },
 
-    svg: {
-        fontSize: 24,
-    }
-})
+    size: {
+      medium: {
+        width: "3rem",
+        height: "3rem",
+
+        svg: {
+          fontSize: 24,
+        },
+      },
+
+      large: {
+        width: "3.5rem",
+        height: "3.5rem",
+
+        svg: {
+          fontSize: 32,
+        },
+      }
+    },
+  },
+
+  defaultVariants: {
+    color: "gray",
+    size: "medium",
+  },
+});
