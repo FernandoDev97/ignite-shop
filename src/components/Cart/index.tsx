@@ -17,7 +17,7 @@ export function Cart() {
     currency: 'BRL'
   }).format(cartTotal)
 
-  function handleRemoveCartItem (productId: string) {
+  function handleRemoveCartItem(productId: string) {
     removeCartItem(productId)
   }
 
@@ -49,9 +49,9 @@ export function Cart() {
           <h2>Sacola de Compras</h2>
 
           <section>
-            {cartQuantity <= 0 && <p>Pareceque seu carrinho está vazio :(</p>}
+            {cartQuantity <= 0 && <p>Parece que seu carrinho está vazio : (</p>}
             {cartItems.map(cartItem => (
-              <CartProduct key={cartItem.id}> 
+              <CartProduct key={cartItem.id}>
                 <CartProductImage>
                   <Image width={100} height={93} alt='' src={cartItem.imageUrl} />
                 </CartProductImage>
@@ -74,7 +74,12 @@ export function Cart() {
                 <p>{formattedCartTotal}</p>
               </div>
             </FinalizationDetails>
-            <button onClick={() => handlePayment()}>Finalzar Compra</button>
+            <button 
+              disabled={cartQuantity <= 0 || isCreatePaymentSession} 
+              onClick={() => handlePayment()}> {cartQuantity <= 0 ? 
+              'Sua sacola está vazia' : 
+              'Finalizar Compra'} 
+            </button>
           </CartFinalization>
         </CartContent>
       </Dialog.Portal>
